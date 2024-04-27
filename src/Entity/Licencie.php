@@ -7,6 +7,7 @@ use App\Repository\LicencieRepository;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use Doctrine\DBAL\Types\Types;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: LicencieRepository::class)]
@@ -52,8 +53,8 @@ class Licencie
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $mail = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $dateadhesion = null;
+    #[ORM\Column(type: "datetime")]
+    private ?DateTime $dateadhesion = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false, name: 'idClub')]
@@ -183,7 +184,7 @@ class Licencie
 
     public function setDateAdhesion(\DateTimeInterface $dateadhesion): static
     {
-        $this->dateadhesion = $dateadhesion;
+        $this->dateadhesion = DateTime::createFromFormat('d/m/Y',$dateadhesion);
 
         return $this;
     }
